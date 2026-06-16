@@ -4,6 +4,8 @@
 
 **Deep Insight** is a skill repository for the [yogsoth-ai](https://github.com/yogsoth-ai) ecosystem that transforms surface-level research gaps into deep structural understanding. It orchestrates 5 analytical campaigns — gap analysis, insight generation, boundary analysis, sensitivity analysis, and problem reformulation — to produce research insights that go beyond literature review into genuine understanding.
 
+> 🧭 **Part of the [De-Anthropocentric Research Engine](https://github.com/yogsoth-ai/de-anthropocentric-research-engine).** This repository is one of nine composable research packages that make up DARE — the full autonomous research-orchestration system. DARE bundles this package together with the others into a single self-contained clone, unified under one orchestrator. To use these skills as intended — with the spec-driven orchestrator and cross-package routing — clone the [main repository](https://github.com/yogsoth-ai/de-anthropocentric-research-engine) rather than this repo alone.
+
 ## Architecture
 
 ```
@@ -80,6 +82,10 @@ This skill repo imports SOPs from sibling yogsoth-ai repositories:
 | [subagent-spawning](https://github.com/yogsoth-ai/subagent-spawning) | spawn-agent (execution runtime) |
 | [context-management](https://github.com/yogsoth-ai/context-management) | context-checkpoint (state persistence) |
 
-## License
+## 📄 License
 
 [Apache-2.0](LICENSE)
+
+---
+
+*A component of the [De-Anthropocentric Research Engine](https://github.com/yogsoth-ai/de-anthropocentric-research-engine), part of the [Yogsoth AI](https://github.com/yogsoth-ai) ecosystem. Built by [Pthahnix](https://github.com/Pthahnix).*
