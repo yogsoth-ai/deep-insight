@@ -85,3 +85,36 @@ def verify(dare_skills, pkg_skills, target):
         cmp = filecmp.dircmp(dare_skills / name, pkg_skills / name)
         problems.extend(_dircmp_problems(name, cmp, dare_skills, pkg_skills))
     return problems
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description=f"Sync {PKG}/skills to DARE subset")
+    ap.add_argument("--dare-root", default=str(DEFAULT_DARE))
+    ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--verify-only", action="store_true")
+    a = ap.parse_args(argv)
+    dare_root = Path(a.dare_root).resolve()
+    dare_skills = dare_root / "skills"
+    pkg_skills = REPO_ROOT / "skills"
+    target = resolve_target(dare_root)
+    current = {p.name for p in pkg_skills.iterdir() if p.is_dir()}
+    add, dele, common = compute_diff(target, current)
+    print(f"[{PKG}] target={len(target)} current={len(current)} "
+          f"ADD={len(add)} DEL={len(dele)} OVERWRITE={len(common)}")
+    if a.verify_only:
+        problems = verify(dare_skills, pkg_skills, target)
+        print("VERIFY OK" if not problems else "VERIFY FAIL:\n" + "\n".join(problems))
+        return 0 if not problems else 1
+    if a.dry_run:
+        print("ADD:", add); print("DEL:", dele)
+        return 0
+    stats = rebuild(dare_skills, pkg_skills, target)
+    if stats["strays"]:
+        print("WARNING strays left untouched:", stats["strays"])
+    problems = verify(dare_skills, pkg_skills, target)
+    print("VERIFY OK" if not problems else "VERIFY FAIL:\n" + "\n".join(problems))
+    return 0 if not problems else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())
