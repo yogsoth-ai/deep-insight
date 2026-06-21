@@ -43,7 +43,7 @@ def rebuild(dare_skills, pkg_skills, target):
     added, overwritten = [], []
     for name in sorted(target):
         dst = pkg_skills / name
-        if dst.exists():
+        if dst.is_dir():
             shutil.rmtree(dst); overwritten.append(name)
         else:
             added.append(name)
@@ -55,6 +55,25 @@ def rebuild(dare_skills, pkg_skills, target):
             "overwritten": overwritten, "strays": strays}
 
 
+def _dircmp_problems(name, cmp, dare_skills, pkg_skills):
+    """Recursively check for dircmp problems, including content (shallow=False)."""
+    issues = []
+    if cmp.left_only or cmp.right_only or cmp.diff_files or cmp.funny_files:
+        issues.append(f"{name}: left_only={cmp.left_only} right_only={cmp.right_only} "
+                      f"diff={cmp.diff_files} funny={cmp.funny_files}")
+    # Content check: for common files, verify byte-equality (shallow=False)
+    for fname in cmp.common_files:
+        left_path = dare_skills / name / fname
+        right_path = pkg_skills / name / fname
+        if not filecmp.cmp(left_path, right_path, shallow=False):
+            issues.append(f"{name}: content differs in {fname}")
+    # Recurse into subdirs
+    for sub, subcmp in cmp.subdirs.items():
+        sub_name = f"{name}/{sub}"
+        issues.extend(_dircmp_problems(sub_name, subcmp, dare_skills, pkg_skills))
+    return issues
+
+
 def verify(dare_skills, pkg_skills, target):
     dare_skills, pkg_skills = Path(dare_skills), Path(pkg_skills)
     problems = []
@@ -64,8 +83,5 @@ def verify(dare_skills, pkg_skills, target):
                         f"missing={sorted(target-actual)}")
     for name in sorted(target & actual):
         cmp = filecmp.dircmp(dare_skills / name, pkg_skills / name)
-        if cmp.left_only or cmp.right_only or cmp.diff_files or cmp.funny_files:
-            problems.append(f"{name}: left_only={cmp.left_only} "
-                            f"right_only={cmp.right_only} diff={cmp.diff_files} "
-                            f"funny={cmp.funny_files}")
+        problems.extend(_dircmp_problems(name, cmp, dare_skills, pkg_skills))
     return problems
