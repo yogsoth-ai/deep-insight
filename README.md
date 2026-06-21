@@ -18,7 +18,7 @@
 │  │ gap-analysis │  │ insight  │  │ boundary-analysis         │  │
 │  │  5 strat     │  │ 5 strat  │  │  5 strat                  │  │
 │  │  3 tactic    │  │ 4 tactic │  │  3 tactic                 │  │
-│  │ 11 SOP       │  │ 14 SOP   │  │ 12 SOP                    │  │
+│  │ 13 SOP       │  │ 12 SOP   │  │ 11 SOP                    │  │
 │  └──────────────┘  └──────────┘  └───────────────────────────┘  │
 │                                                                  │
 │  ┌──────────────────────────┐  ┌────────────────────────────┐   │
@@ -41,10 +41,12 @@
 | Campaigns | 5 |
 | Strategies | 25 |
 | Tactics | 16 |
-| SOPs (subagent) | 58 |
+| SOPs (subagent) | 57 |
 | SOPs (import) | 5 |
 | SOPs (shared) | 3 |
-| **Total skill directories** | **111** |
+| **Total skill directories** | **112** |
+
+> Total includes the top-level deep-insight router-root directory.
 
 ## Quick Start
 
