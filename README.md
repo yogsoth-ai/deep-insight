@@ -28,6 +28,10 @@
 │  │ 11 SOP                   │  │ 10 SOP                     │   │
 │  └──────────────────────────┘  └────────────────────────────┘   │
 │                                                                  │
+│  ┌──────────────────────────────────────────────────────────┐   │
+│  │ mechanism-gap-hunting                                    │   │
+│  └──────────────────────────────────────────────────────────┘   │
+│                                                                  │
 │  ┌────────────────────────────────────────────────────────────┐  │
 │  │ Shared: 5 import SOPs + 3 shared subagent SOPs            │  │
 │  └────────────────────────────────────────────────────────────┘  │
@@ -38,13 +42,13 @@
 
 | Layer | Count |
 |-------|-------|
-| Campaigns | 5 |
+| Campaigns | 6 |
 | Strategies | 25 |
 | Tactics | 16 |
 | SOPs (subagent) | 57 |
 | SOPs (import) | 5 |
 | SOPs (shared) | 3 |
-| **Total skill directories** | **112** |
+| **Total skill directories** | **113** |
 
 > Total includes the top-level deep-insight router-root directory.
 
